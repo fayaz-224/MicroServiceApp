@@ -1,11 +1,11 @@
 package com.embarkx.jobms.job.dto;
 
-import com.embarkx.jobms.job.external.Company;
-import com.embarkx.jobms.job.external.Review;
+import com.embarkx.jobms.job.externalDto.Company;
+import com.embarkx.jobms.job.externalDto.Review;
 
 import java.util.List;
 
-public class JobDTO {
+public class JobDTO {  //DTO with job, company and review
     private Long id;
     private String title;
     private String description;

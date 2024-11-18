@@ -1,4 +1,4 @@
-package com.embarkx.jobms.job.external;
+package com.embarkx.jobms.job.externalDto;
 
 public class Review {
     private Long id;

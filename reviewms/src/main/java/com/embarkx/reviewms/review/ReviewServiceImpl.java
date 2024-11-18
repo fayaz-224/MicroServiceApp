@@ -1,14 +1,12 @@
-package com.embarkx.reviewms.review.impl;
+package com.embarkx.reviewms.review;
 
-import com.embarkx.reviewms.review.Review;
-import com.embarkx.reviewms.review.ReviewRepository;
-import com.embarkx.reviewms.review.ReviewService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
+
     private final ReviewRepository reviewRepository;
 
     public ReviewServiceImpl(ReviewRepository reviewRepository) {

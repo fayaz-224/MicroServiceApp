@@ -1,10 +1,10 @@
 services:
-  postgres:
+  postgres:   #Database - postgresSQL
     container_name: postgres_container
     image: postgres
     environment:
-      POSTGRES_USER: embarkx
-      POSTGRES_PASSWORD: embarkx
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 1234
       PGDATA: /data/postgres
     volumes:
       - postgres:/data/postgres
@@ -12,8 +12,8 @@ services:
       - "5432:5432"
     networks:
       - postgres
-    restart: unless-stopped
-  pgadmin:
+    restart: unless-stopped  # restarts the container unless manually stopped
+  pgadmin:  #DB console
     container_name: pgadmin_container
     image: dpage/pgadmin4
     environment:
@@ -27,11 +27,19 @@ services:
     networks:
       - postgres
     restart: unless-stopped
-  zipkin:
+  zipkin:  # Distributed tracing system
     image: openzipkin/zipkin
     container_name: zipkin
     ports:
       - 9411:9411
+    networks:
+      - postgres
+  rabbitmq:  # Messaging Queue
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
     networks:
       - postgres
 

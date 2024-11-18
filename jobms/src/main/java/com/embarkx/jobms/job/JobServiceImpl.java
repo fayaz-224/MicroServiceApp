@@ -1,20 +1,14 @@
-package com.embarkx.jobms.job.impl;
+package com.embarkx.jobms.job;
 
-import com.embarkx.jobms.job.Job;
-import com.embarkx.jobms.job.JobRepository;
-import com.embarkx.jobms.job.JobService;
 import com.embarkx.jobms.job.clients.CompanyClient;
 import com.embarkx.jobms.job.clients.ReviewClient;
 import com.embarkx.jobms.job.dto.JobDTO;
-import com.embarkx.jobms.job.external.Company;
-import com.embarkx.jobms.job.external.Review;
-import com.embarkx.jobms.job.mapper.JobMapper;
+import com.embarkx.jobms.job.externalDto.Company;
+import com.embarkx.jobms.job.externalDto.Review;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -25,16 +19,16 @@ import java.util.stream.Collectors;
 
 @Service
 public class JobServiceImpl implements JobService {
-    // private List<Job> jobs = new ArrayList<>();
     JobRepository jobRepository;
 
     @Autowired
-    RestTemplate restTemplate;
+    RestTemplate restTemplate;  //bean from AppConfig class
 
+    //Feign clients
     private CompanyClient companyClient;
     private ReviewClient reviewClient;
 
-    int attempt = 0;
+    int attempt = 0;  //to keep track of all retries happened
 
     public JobServiceImpl(JobRepository jobRepository, CompanyClient companyClient,
                           ReviewClient reviewClient) {
@@ -44,31 +38,37 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-//    @CircuitBreaker(name = "companyBreaker",
-//            fallbackMethod = "companyBreakerFallback")
-    @Retry(name = "companyBreaker",
-            fallbackMethod = "companyBreakerFallback")
+//    @CircuitBreaker(name = "companyBreaker", fallbackMethod = "companyBreakerFallback")
+//    @Retry(name = "companyBreaker", fallbackMethod = "companyBreakerFallback")
+    @RateLimiter(name = "companyBreaker", fallbackMethod = "companyBreakerFallback")
     public List<JobDTO> findAll() {
+        //Company companyObj = restTemplate.getForObject("http://localhost:8081/companies", Company.class);
         System.out.println("Attempt: "+ ++attempt);
         List<Job> jobs = jobRepository.findAll();
-        List<JobDTO> jobDTOS = new ArrayList<>();
 
         return jobs.stream().map(this::convertToDto)
                 .collect(Collectors.toList());
     }
-    public List<String> companyBreakerFallback(Exception e){
+
+    public List<String> companyBreakerFallback(Exception e){  //fallback method
         List<String> list = new ArrayList<>();
-        list.add("Dummy");
+        list.add("Dummy Fallback - requested server is down, try later");
         return list;
     }
 
-    private JobDTO convertToDto(Job job) {
+    private JobDTO convertToDto(Job job) {  //have a combined response with help of DTO
         Company company = companyClient.getCompany(job.getCompanyId());
         List<Review> reviews = reviewClient.getReviews(job.getCompanyId());
 
-        JobDTO jobDTO = JobMapper.
-                mapToJobWithCompanyDto(job,company,reviews);
-        //jobDTO.setCompany(company);
+        JobDTO jobDTO = new JobDTO();  //we can have this in separate method or class as well
+        jobDTO.setId(job.getId());
+        jobDTO.setTitle(job.getTitle());
+        jobDTO.setDescription(job.getDescription());
+        jobDTO.setLocation(job.getLocation());
+        jobDTO.setMaxSalary(job.getMaxSalary());
+        jobDTO.setMinSalary(job.getMinSalary());
+        jobDTO.setCompany(company);
+        jobDTO.setReviews(reviews);
 
         return jobDTO;
     }
