@@ -26,6 +26,8 @@ DTO (Data Transfer Object) is a design pattern used to transfer data between sof
 > http://localhost:8761/
 
 # DB
+![image (1)](https://github.com/user-attachments/assets/088630ef-adeb-4b0d-8905-bf297d168ff9)
+
 > postgres -> our database  <br>
 > pgAdmin -> DB condole http://localhost:5050/
 
