@@ -1,4 +1,4 @@
-package com.embarkx.jobms.job;
+package com.embarkx.jobms.job.entity;
 
 import jakarta.persistence.*;
 

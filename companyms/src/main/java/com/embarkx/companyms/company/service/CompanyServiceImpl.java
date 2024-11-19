@@ -1,8 +1,9 @@
-package com.embarkx.companyms.company;
+package com.embarkx.companyms.company.service;
 
 import com.embarkx.companyms.company.clients.ReviewClient;
 import com.embarkx.companyms.company.dto.ReviewMessage;
-import jakarta.ws.rs.NotFoundException;
+import com.embarkx.companyms.company.entity.Company;
+import com.embarkx.companyms.company.repository.CompanyRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -61,10 +62,12 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public void updateCompanyRating(ReviewMessage reviewMessage) {
         Company company = companyRepository.findById(reviewMessage.getCompanyId())
-                .orElseThrow(() -> new NotFoundException("CompanyNot Found "+ reviewMessage.getCompanyId()));
-        double avgRating = reviewClient.getAverageReviews(reviewMessage.getCompanyId());
-        company.setRating(avgRating);
-        companyRepository.save(company);
+                                            .orElse(null);
+        if (company != null) {
+            Double avgRating = reviewClient.getAverageReviews(reviewMessage.getCompanyId());
+            company.setRating(avgRating);
+            companyRepository.save(company);
+        }
     }
 
 }

@@ -1,6 +1,8 @@
 package com.embarkx.reviewms.review;
 
+import com.embarkx.reviewms.review.entity.Review;
 import com.embarkx.reviewms.review.messaging.ReviewMessageProducer;
+import com.embarkx.reviewms.review.service.ReviewService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +43,6 @@ public class ReviewController {
     public ResponseEntity<Review> getReview(@PathVariable Long reviewId){
         return new ResponseEntity<>(reviewService.getReview(reviewId),
                                     HttpStatus.OK);
-
     }
 
     @PutMapping("/{reviewId}")
@@ -65,7 +66,7 @@ public class ReviewController {
                     HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/averageRatting")   //returns avg ratting of given company
+    @GetMapping("/averageRating")   //returns avg rating of given company
     public Double getAverageReview(@RequestParam Long companyId){
         List<Review> reviewList = reviewService.getAllReviews(companyId);
         return reviewList.stream().mapToDouble(Review::getRating).average().orElse(0.0);

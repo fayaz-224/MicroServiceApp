@@ -1,4 +1,6 @@
-package com.embarkx.reviewms.review;
+package com.embarkx.reviewms.review.service;
+
+import com.embarkx.reviewms.review.entity.Review;
 
 import java.util.List;
 

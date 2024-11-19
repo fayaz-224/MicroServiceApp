@@ -1,5 +1,6 @@
-package com.embarkx.jobms.job;
+package com.embarkx.jobms.job.service;
 
+import com.embarkx.jobms.job.entity.Job;
 import com.embarkx.jobms.job.dto.JobDTO;
 
 import java.util.List;

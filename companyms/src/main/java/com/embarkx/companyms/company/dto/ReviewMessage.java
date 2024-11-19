@@ -4,7 +4,7 @@ public class ReviewMessage {   //DTO for review message Queues
     private Long id;
     private String title;
     private String description;
-    private double rating;
+    private Double rating;
     private Long companyId;
 
     public Long getId() {
@@ -31,11 +31,11 @@ public class ReviewMessage {   //DTO for review message Queues
         this.description = description;
     }
 
-    public double getRating() {
+    public Double getRating() {
         return rating;
     }
 
-    public void setRating(double rating) {
+    public void setRating(Double rating) {
         this.rating = rating;
     }
 

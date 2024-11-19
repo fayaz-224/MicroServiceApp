@@ -1,5 +1,7 @@
-package com.embarkx.reviewms.review;
+package com.embarkx.reviewms.review.service;
 
+import com.embarkx.reviewms.review.entity.Review;
+import com.embarkx.reviewms.review.repository.ReviewRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

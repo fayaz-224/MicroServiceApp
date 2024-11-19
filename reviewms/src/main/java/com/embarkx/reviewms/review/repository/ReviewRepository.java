@@ -1,5 +1,6 @@
-package com.embarkx.reviewms.review;
+package com.embarkx.reviewms.review.repository;
 
+import com.embarkx.reviewms.review.entity.Review;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

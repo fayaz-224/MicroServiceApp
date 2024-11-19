@@ -1,13 +1,13 @@
-package com.embarkx.jobms.job;
+package com.embarkx.jobms.job.service;
 
+import com.embarkx.jobms.job.entity.Job;
 import com.embarkx.jobms.job.clients.CompanyClient;
 import com.embarkx.jobms.job.clients.ReviewClient;
 import com.embarkx.jobms.job.dto.JobDTO;
 import com.embarkx.jobms.job.externalDto.Company;
 import com.embarkx.jobms.job.externalDto.Review;
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import com.embarkx.jobms.job.repository.JobRepository;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
-import io.github.resilience4j.retry.annotation.Retry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -40,7 +40,7 @@ public class JobServiceImpl implements JobService {
     @Override
 //    @CircuitBreaker(name = "companyBreaker", fallbackMethod = "companyBreakerFallback")
 //    @Retry(name = "companyBreaker", fallbackMethod = "companyBreakerFallback")
-    @RateLimiter(name = "companyBreaker", fallbackMethod = "companyBreakerFallback")
+    @RateLimiter(name = "companyBreaker", fallbackMethod = "companyBreakerFallback")  //fallback is optional
     public List<JobDTO> findAll() {
         //Company companyObj = restTemplate.getForObject("http://localhost:8081/companies", Company.class);
         System.out.println("Attempt: "+ ++attempt);

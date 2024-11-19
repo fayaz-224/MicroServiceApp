@@ -1,5 +1,7 @@
 package com.embarkx.companyms.company;
 
+import com.embarkx.companyms.company.entity.Company;
+import com.embarkx.companyms.company.service.CompanyService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
