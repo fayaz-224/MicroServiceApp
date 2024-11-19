@@ -26,14 +26,20 @@ DTO (Data Transfer Object) is a design pattern used to transfer data between sof
 >http://localhost:8761/
 
 # Zipkin
+![image3](https://github.com/user-attachments/assets/becdc68a-74d2-4984-997d-ebc624a404c5)
 
-
->Download zipkin jar and run - https://zipkin.io/pages/quickstart.html . we have it in our docker-compose  <br>
->http://localhost:9411/zipkin
+> Download zipkin jar and run - https://zipkin.io/pages/quickstart.html . we have it in our docker-compose  <br>
+> http://localhost:9411/zipkin
 
 # Config-Server
->If we are using config-server to load profiles from GIT <br>
+> If we are using config-server to load profiles from GIT <br>
 > http://localhost:8080/application/dev
+
+# Feign
+> Its a declerative web client, to reduce boiler plate codes of restTemplate and bring load balancing capabilities.
+
+![image1](https://github.com/user-attachments/assets/7ea1a4a1-03bf-41ba-814f-afbbe163e762)
+![image2](https://github.com/user-attachments/assets/ea6d15f9-40d1-4a57-96cc-9928c2dfd484)
 
 # RabitMQ
 > To download rabbitMQ - https://www.rabbitmq.com/docs/download . Now, we have added in docker compose
@@ -43,7 +49,7 @@ DTO (Data Transfer Object) is a design pattern used to transfer data between sof
 > root/1234 -> ours
 
 # DOCKER
-
+![image](https://github.com/user-attachments/assets/24926fa3-767b-48ae-9d77-f6e96979424a)
 
 > 1. ./mvnw spring-boot:build-image "-Dspring-boot.build- image.imageName=<IMAGE-NAME>" <br>
 > 2. docker push IMAGE-NAME
